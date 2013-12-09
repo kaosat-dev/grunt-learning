@@ -1,0 +1,22 @@
+{
+  "name": "grunt_test",
+  "version": "0.0.3",
+  "description": "ERROR: No README.md file found!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "grunt": "",
+    "grunt-contrib-uglify": "",
+    "grunt-contrib-jshint": "",
+    "grunt-jasmine-node": "",
+    "grunt-release": "~0.6.0",
+    "grunt-contrib-coffee": "~0.7.0",
+    "browserify": "~2.36.1",
+    "grunt-browserify": "~1.2.11"
+  },
+  "repository": "",
+  "author": "",
+  "license": "MIT"
+}
