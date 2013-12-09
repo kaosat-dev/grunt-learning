@@ -14,7 +14,9 @@
     "grunt-release": "~0.6.0",
     "grunt-contrib-coffee": "~0.7.0",
     "browserify": "~2.36.1",
-    "grunt-browserify": "~1.2.11"
+    "grunt-browserify": "~1.2.11",
+    "grunt-vulcanize": "~0.1.0",
+    "grunt-node-webkit-builder": "~0.1.13"
   },
   "repository": "",
   "author": "",

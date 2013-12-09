@@ -8,3 +8,4 @@ This is a list of all the things that need figuring out:
  - browserify support (with external && require support)
  - builds for npm, bower (depending on cases)
  - polymer build
+ - node webkit build
