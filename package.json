@@ -1,10 +1,10 @@
 {
   "name": "grunt_test",
   "version": "0.0.3",
-  "description": "ERROR: No README.md file found!",
+  "description": "Bla bla testing one two!",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": ""
   },
   "devDependencies": {
     "grunt": "",
@@ -16,7 +16,9 @@
     "browserify": "~2.36.1",
     "grunt-browserify": "~1.2.11",
     "grunt-vulcanize": "~0.1.0",
-    "grunt-node-webkit-builder": "~0.1.13"
+    "grunt-node-webkit-builder": "~0.1.13",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-watch": "~0.5.3"
   },
   "repository": "",
   "author": "",

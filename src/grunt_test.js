@@ -1,8 +1,10 @@
+var foo = require("./foo");
+var bar = require("./bar");
 
-
-function FooBar()
+function fooBar()
 {
-  console.log("fooBaring");
+  var res= foo + bar;
+  console.log("res", res);
 }
 
-module.exports = FooBar;
+module.exports = fooBar;

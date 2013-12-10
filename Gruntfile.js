@@ -3,18 +3,15 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    uglify: {
+    //testing & checking
+    jshint: {
+      // define the files to lint
+      files: ['Gruntfile.js', 'src/**/*.js', 'specs/**/*.js'],
       options: {
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
-      },
-      build: {
-        src: 'src/<%= pkg.name %>.js',
-        dest: 'build/<%= pkg.name %>.min.js'
-      }
-    },
-    release: {
-      options: {
-        npmtag: 'canary',
+        globals: {
+          console: true,
+          module: true
+        }
       }
     },
     jasmine_node: {
@@ -29,12 +26,40 @@ module.exports = function(grunt) {
         consolidate: true
       }
     },
-    watch: {
-      pivotal : {
-        files: ['src/**/*.js', 'specs/**/*.js'],
-        tasks: 'jasmine:pivotal:build'
+    //build & release tasks
+    concat: {
+      options: {
+        // define a string to put between each file in the concatenated output
+        separator: ';'
+      },
+      dist: {
+        // the files to concatenate
+        src: ['src/**/*.js'],
+        // the location of the resulting JS file
+        dest: 'dist/<%= pkg.name %>.js'
       }
     },
+    uglify: {
+      options: {
+        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+      },
+      dist: {
+        files: {
+          'dist/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+        }
+      }
+    },
+    release: {
+      options: {
+        npmtag: 'canary',
+      }
+    },
+    watch: {
+      files: ['src/**/*.js', 'specs/**/*.js'],
+      tasks: ['jshint','jasmine_node']
+    },
+
+    //-------------------------------------
     nodewebkit: {
       options: {
           build_dir: './webkitbuilds', // Where the build version of my node-webkit app is saved
@@ -45,7 +70,30 @@ module.exports = function(grunt) {
       },
       src: ['./example/public/**/*'] // Your node-wekit app
     },
+    browserify: {
+      'build/browserify/out.js': ['src/<%= pkg.name %>.js', 'client/app.js']
+    },
+
+    //----------------------------------
+    foo:{
+      foo:"toto",
+      bar:"tata"
+    },
+    build2:
+    {
+      bower:{
+        tasks: ['jshint']
+      },
+      browserify:{
+        tasks: ['jasmine_node']
+      }
+      
+    }
   });
+
+
+  //general
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   //languages
   //load the "coffee" task
@@ -54,19 +102,55 @@ module.exports = function(grunt) {
   //testing
   //load the "jasmine_node" task
   grunt.loadNpmTasks('grunt-jasmine-node');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
 
   //release cycle
-  // Load the plugin that provides the "uglify" task.
+  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  //load the "release" task
+
   grunt.loadNpmTasks('grunt-release');
-  //load the "browserify" task
+
   grunt.loadNpmTasks('grunt-browserify');
-  //load the "vulcanize" task
   grunt.loadNpmTasks('grunt-vulcanize');
-  //load the "node-webkit" task
   grunt.loadNpmTasks('grunt-node-webkit-builder');
 
-  // Default task(s).
-  grunt.registerTask('default', ['uglify','jasmine_node','release']);
+  // Task(s).
+  grunt.registerTask('test', ['jshint', 'jasmine_node']);
+
+  grunt.registerTask('build', ['jshint', 'jasmine_node','concat','uglify']);
+
+  grunt.registerTask('release', ['concat','uglify','jasmine_node','release']);
+
+  //testing stuff out
+  grunt.registerMultiTask('foo', 'bla', function(){
+    grunt.log.writeln(this.target + ': ' + this.data);
+  });
+
+  grunt.registerMultiTask('build2', 'multiple build confs', function(){
+    grunt.log.writeln(this.target + ': ' + this.data);
+  });
+
+
+  grunt.registerTask('build3', function(target) {
+    
+    switch(target)
+    {
+      case 'bower':
+        var tasks = ['concat', 'uglify'];
+      break;
+      case 'npm':
+        var tasks = ['concat', 'uglify'];
+      break;
+
+      default:
+        grunt.warn('taskA target must be specified, like taskA:001.');
+    }
+
+    grunt.task.run.apply(grunt.task, tasks.map(function(task) {
+      return task + ':' + target;
+    }));
+
+  });
+
+
 };
