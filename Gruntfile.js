@@ -55,10 +55,9 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-      files: ['src/**/*.js', 'specs/**/*.js'],
+      files: ['GruntFile.js', 'src/**/*.js', 'specs/**/*.js'],
       tasks: ['jshint','jasmine_node','browserify']
     },
-
     //-------------------------------------
     nodewebkit: {
       options: {
@@ -70,6 +69,7 @@ module.exports = function(grunt) {
       },
       src: ['./example/public/**/*'] // Your node-wekit app
     },
+
     browserify: {
       main:{
         files: {
@@ -78,7 +78,12 @@ module.exports = function(grunt) {
         options: {
           transform: ['coffeeify'],
           external: ['src/fakeLib.js'],
-          alias:['src/<%= pkg.name %>.js:<%= pkg.name %>'],
+          alias:[
+            'src/<%= pkg.name %>.js:<%= pkg.name %>',
+            "src/fakeLib.js:fakeLib"
+          ],
+          ignore:["src/fakeLib.js"]
+          
         }
       },
       lib:{

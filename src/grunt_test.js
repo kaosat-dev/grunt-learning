@@ -5,6 +5,7 @@ var bla = require("./bla.coffee");
 //test for "external/require" browserify stuff
 var fakeLib = require("./fakeLib");
 
+
 function fooBar()
 {
   var res= foo + bar + bla;
