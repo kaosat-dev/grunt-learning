@@ -18,7 +18,8 @@
     "grunt-vulcanize": "~0.1.0",
     "grunt-node-webkit-builder": "~0.1.13",
     "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-watch": "~0.5.3"
+    "grunt-contrib-watch": "~0.5.3",
+    "coffeeify": "~0.5.2"
   },
   "repository": "",
   "author": "",

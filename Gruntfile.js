@@ -56,7 +56,7 @@ module.exports = function(grunt) {
     },
     watch: {
       files: ['src/**/*.js', 'specs/**/*.js'],
-      tasks: ['jshint','jasmine_node']
+      tasks: ['jshint','jasmine_node','browserify']
     },
 
     //-------------------------------------
@@ -71,7 +71,24 @@ module.exports = function(grunt) {
       src: ['./example/public/**/*'] // Your node-wekit app
     },
     browserify: {
-      'build/browserify/out.js': ['src/<%= pkg.name %>.js', 'client/app.js']
+      main:{
+        files: {
+          'build/browserify/out.js': 'src/<%= pkg.name %>.js'
+        },
+        options: {
+          transform: ['coffeeify'],
+          external: ['src/fakeLib.js'],
+          alias:['src/<%= pkg.name %>.js:<%= pkg.name %>'],
+        }
+      },
+      lib:{
+        files: {
+          'build/browserify/lib.js': 'src/fakeLib.js'
+        },
+        options:{
+          alias: ['src/fakeLib.js:fakeLib']//use this to enable in-browser "require" calls
+        }
+      }
     },
 
     //----------------------------------
@@ -91,6 +108,8 @@ module.exports = function(grunt) {
     }
   });
 
+
+  // 'src/**/*.js', 'src/**/*.coffee'],
 
   //general
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -131,15 +150,17 @@ module.exports = function(grunt) {
   });
 
 
+  //this is breaking the "watch" task ??
+  /*
   grunt.registerTask('build3', function(target) {
     
     switch(target)
     {
       case 'bower':
-        var tasks = ['concat', 'uglify'];
+        var __tasks = ['concat', 'uglify'];
       break;
       case 'npm':
-        var tasks = ['concat', 'uglify'];
+        var __tasks = ['concat', 'uglify'];
       break;
 
       default:
@@ -150,7 +171,7 @@ module.exports = function(grunt) {
       return task + ':' + target;
     }));
 
-  });
+  });*/
 
 
 };

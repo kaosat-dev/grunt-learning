@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <title>Grunt experiments : browserify</title>
+      <script type="text/javascript" src="../build/browserify/lib.js"></script>
+      <script type="text/javascript" src="../build/browserify/out.js"></script>
+  </head>
+<body>
+
+  <script>
+    var testFakeLib = require("fakeLib");
+    console.log("testFakeLib",testFakeLib);
+    
+    var testFooBar = require("grunt_test");
+    console.log("testFooBar",testFooBar);
+
+    testFooBar();
+
+  </script>  
+</body>
+</html>
